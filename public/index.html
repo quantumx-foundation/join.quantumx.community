@@ -4,6 +4,20 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+<!-- Analytics. Placed this high on purpose: the script at the bottom sends
+     browsers to Discord after 2.2s, so gtag.js has only that window to load
+     and get its hit away. The preconnect buys back the DNS + TLS handshake. -->
+<link rel="preconnect" href="https://www.googletagmanager.com" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LSJLLWEZB7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LSJLLWEZB7');
+</script>
+
 <title>Join the QuantumX Discord Community</title>
 <meta name="description" content="Stay on top of event updates and connect with folks in the quantum tech space: mentors, speakers, and everyone else building through the QuantumX Foundation." />
 <link rel="canonical" href="https://join.quantumx.community/" />
