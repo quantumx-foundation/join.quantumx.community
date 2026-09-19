@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Join the QuantumX Discord Community</title>
+<meta name="description" content="Stay on top of event updates and connect with folks in the quantum tech space: mentors, speakers, and everyone else building through the QuantumX Foundation." />
+<link rel="canonical" href="https://join.quantumx.community/" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<meta name="theme-color" content="#a855f7" />
+<meta name="color-scheme" content="light" />
+
+<!-- Social preview. This page deliberately does NOT send a 3xx redirect:
+     crawlers do not run JS, so they read these tags, while real browsers get
+     bounced to Discord by the script at the bottom. A server redirect would
+     make Discord/X/LinkedIn show discord.gg's own card instead of ours. -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://join.quantumx.community/" />
+<meta property="og:site_name" content="QuantumX Community" />
+<meta property="og:title" content="Join the QuantumX Discord Community" />
+<meta property="og:description" content="Stay on top of event updates and connect with folks in the quantum tech space: mentors, speakers, and everyone else building through the QuantumX Foundation." />
+<meta property="og:image" content="https://join.quantumx.community/og.png" />
+<meta property="og:image:secure_url" content="https://join.quantumx.community/og.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Join the QuantumX Discord community" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@_Quantum_X_" />
+<meta name="twitter:creator" content="@_Quantum_X_" />
+<meta name="twitter:title" content="Join the QuantumX Discord Community" />
+<meta name="twitter:description" content="Event updates, mentors, speakers, and everyone else building through the QuantumX Foundation." />
+<meta name="twitter:image" content="https://join.quantumx.community/og.png" />
+<meta name="twitter:image:alt" content="Join the QuantumX Discord community" />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+<link rel="icon" href="/icon-512.png" type="image/png" sizes="512x512" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..900&family=Geist+Mono:wght@500&family=Geist:wght@400;500&display=swap" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "QuantumX Community",
+  "url": "https://quantumx.community",
+  "logo": "https://join.quantumx.community/icon-512.png",
+  "description": "A global community for people learning, researching and building quantum technology.",
+  "sameAs": [
+    "https://discord.gg/2w3pgqTQY",
+    "https://www.linkedin.com/company/quantumx-foundation/",
+    "https://x.com/_Quantum_X_",
+    "https://www.instagram.com/quantumx.school/",
+    "https://luma.com/user/quantumx"
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --purple: #a855f7;
+    --ink: #0a0a0a;
+    --shade: rgba(0, 0, 0, 0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: safe center;
+    justify-items: center;
+    padding: clamp(2rem, 5vw, 5rem) clamp(1.25rem, 5vw, 2rem);
+    background: var(--purple);
+    color: var(--ink);
+    font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Oversized Discord glyph bleeding off the bottom-right, as in the card art */
+  .watermark {
+    position: fixed;
+    right: -6vw;
+    bottom: -14vh;
+    width: min(62vw, 46rem);
+    color: var(--shade);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .watermark svg { width: 100%; height: auto; display: block; }
+
+  main {
+    position: relative;
+    z-index: 1;
+    width: min(64rem, 100%);
+    min-width: 0;
+  }
+
+  .eyebrow {
+    margin: 0 0 clamp(1rem, 2vw, 1.75rem);
+    font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+    font-size: clamp(0.72rem, 1.1vw, 0.85rem);
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: "Archivo", "Archivo Black", ui-sans-serif, system-ui, sans-serif;
+    font-variation-settings: "wdth" 82, "wght" 900;
+    font-weight: 900;
+    font-size: clamp(2.25rem, 8.4vw, 6.25rem);
+    line-height: 0.9;
+    letter-spacing: -0.018em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .lede {
+    margin: clamp(1.5rem, 3.5vw, 2.5rem) 0 0;
+    max-width: 44ch;
+    font-size: clamp(1.02rem, 1.65vw, 1.4rem);
+    line-height: 1.55;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85em;
+    margin-top: clamp(1.75rem, 4vw, 3rem);
+    padding: 1.1em 1.9em;
+    background: var(--ink);
+    color: #fff;
+    font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+    font-size: clamp(0.82rem, 1.2vw, 1rem);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cta svg { width: 1.45em; height: 1.45em; flex: none; fill: currentColor; }
+  .cta:hover, .cta:focus-visible { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--ink); }
+  .cta:active { transform: translate(0, 0); box-shadow: none; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+
+  /* Redirect status: a thin bar that runs for the length of the timeout */
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.62);
+  }
+  /* An author `display` beats the UA's [hidden] rule, so restore it explicitly. */
+  .status[hidden] { display: none; }
+  .track { width: min(11rem, 34vw); height: 3px; background: var(--shade); overflow: hidden; }
+  .bar { width: 100%; height: 100%; background: var(--ink); transform-origin: left; transform: scaleX(0); }
+  .redirecting .bar { animation: fill var(--delay, 2200ms) linear forwards; }
+  @keyframes fill { to { transform: scaleX(1); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta { transition: none; }
+    .redirecting .bar { animation: none; transform: scaleX(1); }
+  }
+
+  @media (max-width: 40rem) {
+    .watermark { right: -26vw; bottom: -4vh; width: 92vw; }
+    .lede { max-width: none; }
+    .cta { width: 100%; justify-content: center; padding-inline: 1rem; }
+  }
+</style>
+</head>
+
+<body>
+  <div class="watermark" aria-hidden="true">
+    <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+      <path fill="currentColor" d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.198.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z" />
+    </svg>
+  </div>
+
+  <main>
+    <p class="eyebrow">Community</p>
+    <h1>Join the QuantumX Discord Community</h1>
+    <p class="lede">
+      Stay on top of event updates and connect with folks in the quantum tech
+      space: mentors, speakers, and everyone else building through the
+      foundation.
+    </p>
+
+    <a class="cta" id="invite" href="https://discord.gg/2w3pgqTQY" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.198.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z" />
+      </svg>
+      Join Discord Server
+    </a>
+
+    <p class="status" id="status" hidden>
+      <span>Taking you to Discord</span>
+      <span class="track"><span class="bar"></span></span>
+    </p>
+  </main>
+
+  <noscript>
+    <!-- Inside <noscript> so crawlers, which ignore it, still read the card above. -->
+    <meta http-equiv="refresh" content="0; url=https://discord.gg/2w3pgqTQY" />
+  </noscript>
+
+  <script>
+    (function () {
+      var INVITE = "https://discord.gg/2w3pgqTQY";
+      var DELAY = 2200;
+
+      var params = new URLSearchParams(location.search);
+
+      // Tagged the same way quantumx.community/join does it, so Discord arrivals
+      // from this domain stay distinguishable in our own logs and analytics.
+      var target = new URL(INVITE);
+      target.searchParams.set("utm_source", "join.quantumx.community");
+      target.searchParams.set("utm_medium", "join");
+      var ref = params.get("ref");
+      if (ref) target.searchParams.set("utm_campaign", ref.slice(0, 40));
+
+      var link = document.getElementById("invite");
+      link.href = target.toString();
+
+      // ?stay=1 keeps the page open for screenshots and preview debugging.
+      if (params.get("stay") === "1") return;
+
+      var status = document.getElementById("status");
+      status.hidden = false;
+      document.body.classList.add("redirecting");
+      document.body.style.setProperty("--delay", DELAY + "ms");
+
+      // replace() so the back button returns to where they came from,
+      // instead of bouncing them straight back into Discord.
+      setTimeout(function () {
+        location.replace(target.toString());
+      }, DELAY);
+    })();
+  </script>
+</body>
+</html>

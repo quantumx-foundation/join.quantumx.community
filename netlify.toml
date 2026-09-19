@@ -1,0 +1,35 @@
+# Static site: nothing to build, everything in public/ is served as-is.
+[build]
+  publish = "public"
+  command = ""
+
+# index.html must stay uncached so a changed invite link goes live immediately,
+# and so social platforms re-fetch the card when we update it.
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Images and icons are content-stable, so let them sit in caches.
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Anything else on this domain is still an invitation to join.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
