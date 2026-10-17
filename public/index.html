@@ -4,9 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- Analytics. Placed this high on purpose: the script at the bottom sends
-     browsers to Discord after 2.2s, so gtag.js has only that window to load
-     and get its hit away. The preconnect buys back the DNS + TLS handshake. -->
+<!-- Analytics. The page no longer auto-redirects, so gtag.js has the whole
+     visit to load; the preconnect is kept only as a small perf win. -->
 <link rel="preconnect" href="https://www.googletagmanager.com" />
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSJLLWEZB7"></script>
@@ -170,34 +169,97 @@
   .cta:active { transform: translate(0, 0); box-shadow: none; }
   :focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
 
-  /* Redirect status: a thin bar that runs for the length of the timeout */
-  .status {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  /* Locked until an email lands. JS strips the href, so it is neither
+     clickable nor focusable while locked. */
+  .cta.is-locked {
+    background: rgba(0, 0, 0, 0.28);
+    pointer-events: none;
+  }
+  .cta.is-locked:hover { transform: none; box-shadow: none; }
+
+  .gate { margin-top: clamp(1.75rem, 4vw, 3rem); max-width: 34rem; }
+
+  .row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  .field {
+    flex: 1 1 14rem;
+    min-width: 0;
+    padding: 1.05em 1.1em;
+    border: 3px solid var(--ink);
+    border-radius: 0;
+    background: #fff;
+    color: var(--ink);
     font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.16em;
+    font-size: clamp(0.82rem, 1.2vw, 0.95rem);
+    letter-spacing: 0.04em;
+  }
+  .field::placeholder { color: rgba(0, 0, 0, 0.38); }
+
+  .btn {
+    flex: none;
+    padding: 1.1em 1.6em;
+    border: 3px solid var(--ink);
+    border-radius: 0;
+    background: var(--ink);
+    color: #fff;
+    font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+    font-size: clamp(0.78rem, 1.1vw, 0.9rem);
+    font-weight: 500;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover:not(:disabled), .btn:focus-visible { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--ink); }
+  .btn:disabled { opacity: 0.55; cursor: progress; }
+
+  .note {
+    margin: 0.9rem 0 0;
+    max-width: 44ch;
+    font-size: 0.8rem;
+    line-height: 1.5;
     color: rgba(0, 0, 0, 0.62);
   }
+
+  .msg {
+    margin: 0.9rem 0 0;
+    font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.72);
+  }
   /* An author `display` beats the UA's [hidden] rule, so restore it explicitly. */
-  .status[hidden] { display: none; }
-  .track { width: min(11rem, 34vw); height: 3px; background: var(--shade); overflow: hidden; }
-  .bar { width: 100%; height: 100%; background: var(--ink); transform-origin: left; transform: scaleX(0); }
-  .redirecting .bar { animation: fill var(--delay, 2200ms) linear forwards; }
-  @keyframes fill { to { transform: scaleX(1); } }
+  .msg[hidden] { display: none; }
+  .msg.is-bad { color: #7f1d1d; }
+
+  /* Once saved, the input row is done; only the confirmation stays. */
+  .is-done .row, .is-done .note { display: none; }
+
+  /* Honeypot. Positioned off-screen rather than display:none, which some bots skip. */
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .sr {
+    position: absolute; width: 1px; height: 1px;
+    margin: -1px; padding: 0; border: 0;
+    clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .cta { transition: none; }
-    .redirecting .bar { animation: none; transform: scaleX(1); }
+    .cta, .btn { transition: none; }
   }
 
   @media (max-width: 40rem) {
     .watermark { right: -26vw; bottom: -4vh; width: 92vw; }
     .lede { max-width: none; }
     .cta { width: 100%; justify-content: center; padding-inline: 1rem; }
+    .gate { max-width: none; }
+    /* Stacked: flex-basis would now set the HEIGHT, so clear it and let the
+       input size from its own padding. */
+    .row { flex-direction: column; }
+    .field { flex: none; width: 100%; }
+    .btn { width: 100%; }
   }
 </style>
 </head>
@@ -218,29 +280,42 @@
       foundation.
     </p>
 
+    <form class="gate" id="gate" name="join" method="POST" action="/thanks.html"
+          data-netlify="true" data-netlify-honeypot="bot-field">
+      <!-- Netlify's build step detects this form in the deployed HTML. The hidden
+           form-name is what identifies it when the fetch() below does the POST. -->
+      <input type="hidden" name="form-name" value="join" />
+
+      <p class="hp" aria-hidden="true">
+        <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <label class="sr" for="email">Email address</label>
+      <div class="row">
+        <input class="field" id="email" name="email" type="email" required
+               placeholder="you@example.com" autocomplete="email"
+               inputmode="email" spellcheck="false" />
+        <button class="btn" id="submit" type="submit">Get access</button>
+      </div>
+      <p class="note">
+        We'll only use this for QuantumX event updates. No sharing, unsubscribe
+        any time.
+      </p>
+      <p class="msg" id="msg" role="status" aria-live="polite" hidden></p>
+    </form>
+
     <a class="cta" id="invite" href="https://discord.gg/gFZvXRsxr" rel="noopener">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.198.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z" />
       </svg>
       Join Discord Server
     </a>
-
-    <p class="status" id="status" hidden>
-      <span>Taking you to Discord</span>
-      <span class="track"><span class="bar"></span></span>
-    </p>
   </main>
 
-  <noscript>
-    <!-- Inside <noscript> so crawlers, which ignore it, still read the card above. -->
-    <meta http-equiv="refresh" content="0; url=https://discord.gg/gFZvXRsxr" />
-  </noscript>
 
   <script>
     (function () {
       var INVITE = "https://discord.gg/gFZvXRsxr";
-      var DELAY = 2200;
-
       var params = new URLSearchParams(location.search);
 
       // Tagged the same way quantumx.community/join does it, so Discord arrivals
@@ -251,22 +326,54 @@
       var ref = params.get("ref");
       if (ref) target.searchParams.set("utm_campaign", ref.slice(0, 40));
 
+      var form = document.getElementById("gate");
       var link = document.getElementById("invite");
+      var submit = document.getElementById("submit");
+      var msg = document.getElementById("msg");
+
       link.href = target.toString();
 
-      // ?stay=1 keeps the page open for screenshots and preview debugging.
-      if (params.get("stay") === "1") return;
+      // Lock only now, from JS. The href ships live in the HTML so that
+      // crawlers still see a real link and no-script visitors are never
+      // stranded -- they post the form natively and land on /thanks.html.
+      link.dataset.href = target.toString();
+      link.removeAttribute("href");
+      link.setAttribute("aria-disabled", "true");
+      link.classList.add("is-locked");
 
-      var status = document.getElementById("status");
-      status.hidden = false;
-      document.body.classList.add("redirecting");
-      document.body.style.setProperty("--delay", DELAY + "ms");
+      function finish(text, bad) {
+        link.href = link.dataset.href;
+        link.removeAttribute("aria-disabled");
+        link.classList.remove("is-locked");
+        form.classList.add("is-done");
+        msg.textContent = text;
+        msg.classList.toggle("is-bad", !!bad);
+        msg.hidden = false;
+        link.focus();
+      }
 
-      // replace() so the back button returns to where they came from,
-      // instead of bouncing them straight back into Discord.
-      setTimeout(function () {
-        location.replace(target.toString());
-      }, DELAY);
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+
+        submit.disabled = true;
+        submit.textContent = "Saving";
+
+        // Netlify accepts the POST on any path of the site as long as
+        // form-name is in the body.
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(new FormData(form)).toString()
+        }).then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          finish("You're on the list. The server is open below.");
+        }).catch(function () {
+          // Fail open: a storage hiccup should not stand between somebody and
+          // the community. We lose the address, they still get the invite.
+          finish("We couldn't save that just now, but you can still join below.", true);
+        });
+      });
     })();
   </script>
 </body>
