@@ -120,6 +120,15 @@
     min-width: 0;
   }
 
+  /* The app icon is a solid black square with the mark knocked out of it,
+     so it needs no treatment to sit on the purple. */
+  .logo {
+    display: block;
+    width: clamp(3rem, 6vw, 4.25rem);
+    height: auto;
+    margin: 0 0 clamp(1.1rem, 2.2vw, 1.6rem);
+  }
+
   .eyebrow {
     margin: 0 0 clamp(1rem, 2vw, 1.75rem);
     font-family: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
@@ -272,6 +281,9 @@
   </div>
 
   <main>
+    <!-- Same file the favicons use; alt is empty because the h1 right
+         below already names QuantumX. -->
+    <img class="logo" src="/icon-512.png" width="512" height="512" alt="" />
     <p class="eyebrow">Community</p>
     <h1>Join the QuantumX Discord Community</h1>
     <p class="lede">
