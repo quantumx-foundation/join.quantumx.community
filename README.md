@@ -73,7 +73,7 @@ Keep them in sync — `grep -rn "discord.gg/" public/` lists them all.
 
 **Invites expire.** The code `2w3pgqTQY` silently expired once already and sent
 everyone to a dead page, and `gFZvXRsxr` was set to expire too. The current
-code (`3f7BnEe4DF`) is non-expiring — if you ever replace it, keep it that way
+code (`xC6h4ZfzEP`) is non-expiring — if you ever replace it, keep it that way
 (Server settings → Invites → *Expire after: Never*, *Max uses: No limit*) and
 check it with:
 
