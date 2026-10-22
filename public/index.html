@@ -120,8 +120,9 @@
     min-width: 0;
   }
 
-  /* White mark on transparency, so it reads straight off the purple with no
-     plate behind it. Trimmed to the artwork, so the spacing below is ours. */
+  /* The mark is baked in --ink (#0a0a0a) rather than tinted here, so it
+     matches the headline exactly. Trimmed to the artwork, so the spacing
+     below is ours. If --ink ever moves, the PNG has to be repainted too. */
   .logo {
     display: block;
     width: clamp(4.5rem, 9vw, 6.5rem);
