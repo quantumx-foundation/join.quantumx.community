@@ -120,13 +120,13 @@
     min-width: 0;
   }
 
-  /* The app icon is a solid black square with the mark knocked out of it,
-     so it needs no treatment to sit on the purple. */
+  /* White mark on transparency, so it reads straight off the purple with no
+     plate behind it. Trimmed to the artwork, so the spacing below is ours. */
   .logo {
     display: block;
-    width: clamp(3rem, 6vw, 4.25rem);
+    width: clamp(4.5rem, 9vw, 6.5rem);
     height: auto;
-    margin: 0 0 clamp(1.1rem, 2.2vw, 1.6rem);
+    margin: 0 0 clamp(1.25rem, 2.4vw, 1.75rem);
   }
 
   .eyebrow {
@@ -281,9 +281,8 @@
   </div>
 
   <main>
-    <!-- Same file the favicons use; alt is empty because the h1 right
-         below already names QuantumX. -->
-    <img class="logo" src="/icon-512.png" width="512" height="512" alt="" />
+    <!-- alt is empty because the h1 right below already names QuantumX. -->
+    <img class="logo" src="/logo.png" width="512" height="401" alt="" />
     <p class="eyebrow">Community</p>
     <h1>Join the QuantumX Discord Community</h1>
     <p class="lede">
