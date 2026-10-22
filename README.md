@@ -72,8 +72,10 @@ and no-JS visitors see, and the script rewrites it with UTM tags at runtime.
 Keep them in sync — `grep -rn "discord.gg/" public/` lists them all.
 
 **Invites expire.** The code `2w3pgqTQY` silently expired once already and sent
-everyone to a dead page. Generate a non-expiring invite (Server settings →
-Invites → *Expire after: Never*, *Max uses: No limit*) and check it with:
+everyone to a dead page, and `gFZvXRsxr` was set to expire too. The current
+code (`3f7BnEe4DF`) is non-expiring — if you ever replace it, keep it that way
+(Server settings → Invites → *Expire after: Never*, *Max uses: No limit*) and
+check it with:
 
 ```sh
 curl -s https://discord.com/api/v10/invites/<code> | python3 -m json.tool
