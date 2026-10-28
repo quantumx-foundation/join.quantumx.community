@@ -225,9 +225,10 @@
   .gate { margin-top: clamp(1.75rem, 4vw, 3rem); max-width: 34rem; }
 
   .row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .cell { display: flex; flex: 1 1 12rem; min-width: 0; }
 
   .field {
-    flex: 1 1 14rem;
+    width: 100%;
     min-width: 0;
     padding: 1.05em 1.1em;
     border: 3px solid var(--ink);
@@ -242,6 +243,7 @@
 
   .btn {
     flex: none;
+    margin-top: 0.75rem;
     padding: 1.1em 1.6em;
     border: 3px solid var(--ink);
     border-radius: 0;
@@ -280,7 +282,7 @@
   .msg.is-bad { color: #7f1d1d; }
 
   /* Once saved, the input row is done; only the confirmation stays. */
-  .is-done .row, .is-done .note { display: none; }
+  .is-done .row, .is-done .note, .is-done .btn { display: none; }
 
   /* Honeypot. Positioned off-screen rather than display:none, which some bots skip. */
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -303,7 +305,7 @@
     /* Stacked: flex-basis would now set the HEIGHT, so clear it and let the
        input size from its own padding. */
     .row { flex-direction: column; }
-    .field { flex: none; width: 100%; }
+    .cell { flex: none; width: 100%; }
     .btn { width: 100%; }
     .home { width: 100%; justify-content: center; }
     .actions { flex-direction: column; }
@@ -339,13 +341,20 @@
         <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
       </p>
 
-      <label class="sr" for="email">Email address</label>
       <div class="row">
-        <input class="field" id="email" name="email" type="email" required
-               placeholder="you@example.com" autocomplete="email"
-               inputmode="email" spellcheck="false" />
-        <button class="btn" id="submit" type="submit">Get access</button>
+        <span class="cell">
+          <label class="sr" for="name">Your name</label>
+          <input class="field" id="name" name="name" type="text" required
+                 maxlength="80" placeholder="Your name" autocomplete="name" />
+        </span>
+        <span class="cell">
+          <label class="sr" for="email">Email address</label>
+          <input class="field" id="email" name="email" type="email" required
+                 placeholder="you@example.com" autocomplete="email"
+                 inputmode="email" spellcheck="false" />
+        </span>
       </div>
+      <button class="btn" id="submit" type="submit">Get access</button>
       <p class="note">
         We'll only use this for QuantumX event updates. No sharing, unsubscribe
         any time.
@@ -386,6 +395,7 @@
       if (ref) target.searchParams.set("utm_campaign", ref.slice(0, 40));
 
       var form = document.getElementById("gate");
+      var nameField = document.getElementById("name");
       var link = document.getElementById("invite");
       var submit = document.getElementById("submit");
       var msg = document.getElementById("msg");
@@ -418,6 +428,10 @@
         submit.disabled = true;
         submit.textContent = "Saving";
 
+        // Tidy before it is stored: the raw value keeps whatever spacing was
+        // typed, and "  Ada  Lovelace " is not what we want in the export.
+        nameField.value = nameField.value.trim().replace(/\s+/g, " ");
+
         // Netlify accepts the POST on any path of the site as long as
         // form-name is in the body.
         fetch("/", {
@@ -426,7 +440,10 @@
           body: new URLSearchParams(new FormData(form)).toString()
         }).then(function (r) {
           if (!r.ok) throw new Error("HTTP " + r.status);
-          finish("You're on the list. The server is open below.");
+          // First name only, and set via textContent, so whatever was typed
+          // is inserted as text and never as markup.
+          var who = nameField.value.trim().split(/\s+/)[0].slice(0, 24);
+          finish((who ? who + ", you're" : "You're") + " on the list. The server is open below.");
         }).catch(function () {
           // Fail open: a storage hiccup should not stand between somebody and
           // the community. We lose the address, they still get the invite.

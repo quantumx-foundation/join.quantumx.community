@@ -1,7 +1,8 @@
 # Join QuantumX Community
 
 The landing page behind **join.quantumx.community**. It shows the QuantumX
-Discord card, collects an email address, and then unlocks the Discord invite.
+Discord card, collects a name and email address, and then unlocks the Discord
+invite.
 
 Everything in `public/` is served as-is — there is no build step and no
 dependencies.
@@ -11,7 +12,7 @@ dependencies.
 1. The page renders with the **Join Discord Server** button visibly locked.
    JavaScript removes the button's `href` on load, so it is neither clickable
    nor focusable.
-2. The visitor enters an email and submits. The form is posted to Netlify
+2. The visitor enters their name and email and submits. The form is posted to Netlify
    Forms with `fetch()`, so the page never navigates away.
 3. On success the button unlocks and a confirmation replaces the input.
 
@@ -63,6 +64,7 @@ deliberately absent from `sitemap.xml`.
 | --- | --- |
 | Discord invite | Three spots in `public/index.html` (the `#invite` `href`, the `INVITE` constant, the JSON-LD `sameAs`) **and** `public/thanks.html` |
 | Headline / copy | `<main>` in `public/index.html` |
+| Form fields | `.row` in `public/index.html`; Netlify picks new fields up from the deployed HTML, so adding one needs a redeploy |
 | Consent line | `.note` in `public/index.html` |
 | Social preview | `public/og.png` (1200×630, generated from the site's Discord card) |
 | Favicons | `public/favicon.ico`, `icon-192.png`, `icon-512.png`, `apple-touch-icon.png` |
